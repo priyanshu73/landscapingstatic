@@ -59,6 +59,14 @@ export default function FeatureSlider() {
     loadScripts()
   }, [])
 
+  // preload images to avoid flashes and ensure SVG images scale immediately
+  useEffect(() => {
+    images.forEach((s) => {
+      const img = new window.Image()
+      img.src = s.url
+    })
+  }, [])
+
   const onClick = (index: number) => {
     if (!disabled) setOpened(index)
   }
@@ -314,7 +322,15 @@ function GalleryImage({ url, title, open, inPlace, id, onInPlace, total }: Galle
         </clipPath>
       </defs>
       <g clipPath={`url(#${id}${inPlace ? "_squareClip" : "_circleClip"})`}>
-        <image width={width} height={height} href={url} className="pointer-events-none"></image>
+        <image
+          x="0"
+          y="0"
+          width="100%"
+          height="100%"
+          preserveAspectRatio="xMidYMid slice"
+          href={url}
+          className="pointer-events-none"
+        ></image>
       </g>
     </svg>
   )
