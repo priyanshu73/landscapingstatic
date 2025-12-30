@@ -21,7 +21,7 @@ export function HeroCarousel() {
 
   return (
     <section className="relative w-full bg-muted overflow-hidden">
-      <div className="relative h-[62vh] md:h-[72vh] lg:h-[80vh]">
+      <div className="relative h-[48vh] md:h-[62vh] lg:h-[80vh]">
         <div className="absolute inset-0">
           <Image src="/images/slide-landscapedyard-1100x500-85.jpg" alt="Gettysburg Landscape Yard" fill className="object-cover" priority />
           <div className="absolute inset-0">
@@ -33,23 +33,23 @@ export function HeroCarousel() {
         </div>
 
           <motion.div
-            initial={{ x: -100, opacity: 0 }}
+            initial={{ x: -80, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full max-w-3xl px-6"
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full max-w-3xl px-4"
           >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-white leading-tight drop-shadow-lg">
+            <h1 className="text-4xl md:text-7xl lg:text-8xl font-extrabold text-white leading-tight drop-shadow-lg">
               <span className="block">Home Delivery Available</span>
-              <span className="block mt-2 text-3xl md:text-4xl lg:text-5xl font-semibold text-amber-300">Quality Landscape Materials</span>
+              <span className="block mt-2 text-xl md:text-4xl lg:text-5xl font-semibold text-amber-300">Quality Landscape Materials</span>
             </h1>
-            <p className="mt-4 text-lg md:text-2xl lg:text-3xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
+            <p className="mt-3 text-base md:text-2xl lg:text-3xl text-gray-200 max-w-2xl mx-auto leading-relaxed">
               Your local source for premium <span className="text-amber-300 font-medium">mulch</span>, <span className="text-amber-300 font-medium">topsoil</span>, decorative stone, and more. Serving Gettysburg and surrounding areas with locally sourced materials.
             </p>
-            <div className="mt-6">
+            <div className="mt-4">
               <a
                 href="tel:7173343800"
                 aria-label="Call Gettysburg Landscape Yard"
-                className="inline-block bg-amber-300 text-black px-6 py-3 rounded-md text-lg md:text-xl lg:text-2xl font-semibold shadow-lg"
+                className="inline-block bg-amber-300 text-black px-4 py-2 rounded-md text-base md:text-xl lg:text-2xl font-semibold shadow-lg"
               >
                 (717) 334-3800
               </a>

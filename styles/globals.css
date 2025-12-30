@@ -123,3 +123,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* When swiping the slider on mobile, make header non-sticky to avoid accidental pull interactions */
+body.no-sticky-header .site-header {
+  position: static !important;
+  top: auto !important;
+  z-index: auto !important;
+  box-shadow: none !important;
+}

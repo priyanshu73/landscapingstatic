@@ -10,7 +10,7 @@ export function Header() {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="bg-white border-b border-border sticky top-0 z-50 shadow-sm backdrop-blur-sm bg-white/95"
+      className="site-header bg-white border-b border-border shadow-sm backdrop-blur-sm bg-white/95"
     >
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-6">

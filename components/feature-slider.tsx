@@ -28,6 +28,9 @@ export default function FeatureSlider() {
   const [disabled, setDisabled] = useState(false)
   const [gsapReady, setGsapReady] = useState(false)
   const autoplayTimer = useRef<number | null>(null)
+  const sliderRef = useRef<HTMLDivElement | null>(null)
+  const pointerStart = useRef<number | null>(null)
+  const pointerDelta = useRef<number>(0)
 
   useEffect(() => {
     const loadScripts = () => {
@@ -99,7 +102,55 @@ export default function FeatureSlider() {
 
   return (
     <div className="flex items-center justify-center w-full">
-      <div className="relative w-full max-w-4xl h-64 md:h-80 lg:h-96 overflow-hidden rounded-[16px] shadow-lg bg-neutral-900">
+      <div
+        ref={sliderRef}
+        onPointerDown={(e) => {
+          pointerStart.current = e.clientX
+          try {
+            ;(e.target as Element).setPointerCapture?.((e as any).pointerId)
+          } catch {}
+          // disable sticky header while swiping on mobile
+          try {
+            document.body.classList.add("no-sticky-header")
+          } catch {}
+        }}
+        onPointerMove={(e) => {
+          if (pointerStart.current != null) pointerDelta.current = e.clientX - pointerStart.current
+        }}
+        onPointerUp={(e) => {
+          if (pointerStart.current != null) {
+            const dx = e.clientX - pointerStart.current
+            if (Math.abs(dx) > 40) {
+              if (dx < 0) next()
+              else prev()
+            }
+          }
+          pointerStart.current = null
+          pointerDelta.current = 0
+          try {
+            document.body.classList.remove("no-sticky-header")
+          } catch {}
+        }}
+        onPointerCancel={() => {
+          pointerStart.current = null
+          pointerDelta.current = 0
+          try {
+            document.body.classList.remove("no-sticky-header")
+          } catch {}
+        }}
+        onPointerLeave={() => {
+          pointerStart.current = null
+          pointerDelta.current = 0
+          try {
+            document.body.classList.remove("no-sticky-header")
+          } catch {}
+        }}
+        className="relative w-full max-w-4xl h-64 md:h-80 lg:h-96 overflow-hidden rounded-[16px] shadow-lg bg-neutral-900"
+      >
+        {/* center highlight */}
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div className="hidden sm:block w-28 h-28 md:w-36 md:h-36 lg:w-44 lg:h-44 rounded-full ring-4 ring-white/12 backdrop-blur-sm" />
+        </div>
         {images.map((image, i) => (
           <div
             key={image.url}
@@ -127,25 +178,27 @@ export default function FeatureSlider() {
         ))}
 
         <div className="absolute left-0 top-0 z-[100] h-full w-full pointer-events-none">
-          <Tabs images={images} onSelect={onClick} />
+          <div className="hidden sm:block h-full w-full">
+            <Tabs images={images} onSelect={onClick} />
+          </div>
         </div>
 
         <button
-          className="absolute left-4 top-1/2 z-[101] -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-md pointer-events-auto"
+          className="absolute left-2 sm:left-4 top-1/2 z-[101] -translate-y-1/2 rounded-full bg-white/90 p-3 sm:p-2 shadow-md pointer-events-auto"
           onClick={prev}
           disabled={disabled}
           aria-label="Previous Image"
         >
-          ‹
+          <span className="text-lg sm:text-base">‹</span>
         </button>
 
         <button
-          className="absolute right-4 top-1/2 z-[101] -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-md pointer-events-auto"
+          className="absolute right-2 sm:right-4 top-1/2 z-[101] -translate-y-1/2 rounded-full bg-white/90 p-3 sm:p-2 shadow-md pointer-events-auto"
           onClick={next}
           disabled={disabled}
           aria-label="Next Image"
         >
-          ›
+          <span className="text-lg sm:text-base">›</span>
         </button>
       </div>
     </div>
